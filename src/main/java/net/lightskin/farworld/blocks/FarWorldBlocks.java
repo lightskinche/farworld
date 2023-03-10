@@ -14,7 +14,7 @@ public class FarWorldBlocks {
 	//stone variations
 	public static Block hardStone;
 	
-	//ores
+	//ores a
 	public static OreBlockBase copperOre;
 	public static OreBlockBase tinOre;
 	public static OreBlockBase nitrogenOre;
