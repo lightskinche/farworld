@@ -1,0 +1,11 @@
+generator.FarWorld=Far World
+
+effect.cold_burn=Cold Burn
+
+tile.nitrogen_gas.name=Nitrogen Gas
+
+tile.hard_stone.name=Hard Stone
+
+tile.nitrogen_ore.name=Nitrogen Ore
+
+item.nitrogen_ore_ingot.name=Nitrogen Ingot

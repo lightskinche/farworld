@@ -1,0 +1,16 @@
+[
+{
+  "modid": "farworld",
+  "name": "Far World",
+  "description": "You'll go far, far away.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Lightskinche"],
+  "credits": "The Forge and FML guys, for making this example",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
