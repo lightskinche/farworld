@@ -5,7 +5,9 @@ import net.lightskin.farworld.world.underground.layers.*;
 
 public class LayerManager {
 	public static Layer[] layerList = {
+			new TestLayer(20, 8),
 			new TestLayer(0, 20)
+			//layer 1 should be asbestos and dust ores
 			//the hardpoint
 
 			//the heat

@@ -7,17 +7,18 @@ import net.lightskin.farworld.world.underground.CaveBiome;
 import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.Region;
 import net.lightskin.farworld.world.underground.Section;
+import net.lightskin.farworld.world.underground.sections.AbyssalMainSection;
 import net.lightskin.farworld.world.underground.sections.TestSection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.Biome;
 
-public class TestRegion extends Region{
-	private Section[] sections = new Section[] {new TestSection(20, 8), new TestSection(0, 20)};
+public class AbyssRegion extends Region{
+	private Section[] sections = new Section[] {new AbyssalMainSection(0, 20)};
 	@Override
 	public OreEntry[] regionalOres() {
 		// TODO Auto-generated method stub
-		return new OreEntry[] {new OreEntry(Blocks.BRICK_BLOCK.getDefaultState(), 9, 5, 256f / 32f / (256f / ICube.SIZE))};
+		return new OreEntry[] {};
 	}
 
 	@Override
@@ -35,19 +36,19 @@ public class TestRegion extends Region{
 	@Override
 	public Biome refrenceBiome() {
 		// TODO Auto-generated method stub
-		return WorldRegister.region;
+		return WorldRegister.abyssalZoneBiome;
 	}
 
 	@Override
 	public IBlockState regionalFillerBlock() {
 		// TODO Auto-generated method stub
-		return FarWorldBlocks.hardStone.getDefaultState();
+		return Blocks.WATER.getDefaultState();
 	}
 
 	@Override
 	public IBlockState[] regionDisabledBlocks() {
 		// TODO Auto-generated method stub
-		return new IBlockState[] {Blocks.COAL_ORE.getDefaultState()};
+		return new IBlockState[] {Blocks.STONE.getDefaultState(),Blocks.COAL_ORE.getDefaultState()}; //too lazy
 	}
 
 }

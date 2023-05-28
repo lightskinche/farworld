@@ -12,6 +12,7 @@ import java.util.function.ToIntFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
@@ -25,6 +26,7 @@ import io.github.opencubicchunks.cubicchunks.api.worldgen.structure.ICubicStruct
 import io.github.opencubicchunks.cubicchunks.api.worldgen.structure.event.InitCubicStructureGeneratorEvent;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.structure.feature.CubicFeatureGenerator;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.structure.feature.ICubicFeatureGenerator;
+import io.github.opencubicchunks.cubicchunks.core.world.cube.Cube;
 import io.github.opencubicchunks.cubicchunks.cubicgen.BasicCubeGenerator;
 import io.github.opencubicchunks.cubicchunks.cubicgen.CustomCubicMod;
 import io.github.opencubicchunks.cubicchunks.cubicgen.common.biome.BiomeBlockReplacerConfig;
@@ -49,6 +51,9 @@ import io.github.opencubicchunks.cubicchunks.cubicgen.preset.wrapper.BiomeDesc;
 import net.lightskin.farworld.FarWorld;
 import net.lightskin.farworld.world.FarWorldBiomeProvider;
 import net.lightskin.farworld.world.WorldRegister;
+import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
+import net.lightskin.farworld.world.biomes.OverworldBiomeSpecial;
+import net.lightskin.farworld.world.biomes.RegionEnforcer;
 import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.Region;
@@ -92,6 +97,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 		public PressureGradient pressure;
 
 	    private boolean fillCubeBiomes;
+	    private FarWorldBiomeProvider specialCase;
 	    
 	    //static FarWorldProvider test = new FarWorldProvider();
 
@@ -102,18 +108,19 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 
 	    public FarWorldTerrianGenerator(World world, final long seed) {
 	        this(world, new FarWorldBiomeProvider(world.getWorldInfo()), createSettings(), seed);
+	        specialCase = new FarWorldBiomeProvider(world.getWorldInfo());
 	    }
 
 	    public FarWorldTerrianGenerator(World world, BiomeProvider biomeProvider, CustomGeneratorSettings settings, final long seed) {
-	        this(world, biomeProvider, settings, seed, true);
+	        this(world, new FarWorldBiomeProvider(world.getWorldInfo()), settings, seed, true);
 	    }
 
 	    private FarWorldTerrianGenerator(World world, BiomeProvider biomeProvider, CustomGeneratorSettings settings, final long seed, boolean isMainLayer) {
 	        super(world);
 	        //test.setWorld(world);
-	        init(world, biomeProvider, settings, seed, isMainLayer);
+	        init(world, new FarWorldBiomeProvider(world.getWorldInfo()), settings, seed, isMainLayer);
 	    }
-	    
+	    //make sure I didn't break this
 	    private static CustomGeneratorSettings createSettings() {
 	        CustomGeneratorSettings settings = new CustomGeneratorSettings();
 	        {
@@ -275,7 +282,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	    public void reloadPreset(String settings) {
 	        ((IWorldInfoAccess) world.getWorldInfo()).setGeneratorOptions(settings);
 	        world.provider.setWorld(world);// this re-creates biome provider
-	        init(world, world.getBiomeProvider(), createSettings(), world.getSeed(), true);
+	        init(world, specialCase, createSettings(), world.getSeed(), true);
 	    }
 
 	    private void init(World world, BiomeProvider biomeProvider, CustomGeneratorSettings settings, long seed, boolean isMainLayer) {
@@ -308,8 +315,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 
 	        if (settings.cubeAreas != null) {
 	            for (Map.Entry<CustomGeneratorSettings.IntAABB, CustomGeneratorSettings> entry : settings.cubeAreas.map) {
-	                this.areaGenerators.put(entry.getKey(), new FarWorldTerrianGenerator(world, FarWorldType.makeBiomeProvider(world,
-	                        entry.getValue()), entry.getValue(), seed, false));
+	                this.areaGenerators.put(entry.getKey(), new FarWorldTerrianGenerator(world, specialCase, entry.getValue(), seed, false));
 	            }
 	        }
 	    }
@@ -389,8 +395,10 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        }
 	        generate(primer, cubeX, cubeY, cubeZ);
 	        generateStructures(primer, new CubePos(cubeX, cubeY, cubeZ));
-	        if (fillCubeBiomes || cubeY <= 0) {
-	            fill3dBiomes(cubeX, cubeY, cubeZ, primer);
+	        //see if this causes problems
+	        //if (true) { //consider optimizing later if it gets really bad
+	        if (fillCubeBiomes || cubeY <= 0 || cubeY >= 8 || RegionEnforcer.enforce(cubeX * 16, cubeZ * 16) != null) {
+	           fill3dBiomes(cubeX, cubeY, cubeZ, primer);
 	        }
 	        return primer;
 	    }
@@ -402,7 +410,9 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        for (int dx = 0; dx < 4; dx++) {
 	            for (int dy = 0; dy < 4; dy++) {
 	                for (int dz = 0; dz < 4; dz++) {
-	    	        	Layer tmp = LayerManager.getLayer(cubeY);
+	    	        	Layer tmp = null;
+	    	        	if(cubeY <= 0 || cubeY >= 8)
+	    	        		tmp = LayerManager.getLayer(cubeY);
     	        		Region r = null;
 	    	        	if(tmp != null) {
 	    		        	r = RegionManager.getRegion(new CubePos(cubeX,cubeY,cubeZ), world, 
@@ -418,9 +428,10 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	    	        		else
 	    	        			primer.setBiome(dx, dy, dz, tmp.refrenceBiome());
 	    	        	}
-	    	        	else
-	                    primer.setBiome(dx, dy, dz,
-	                            biomeSource.getBiome(minX + dx * 4, minY + dy * 4, minZ + dz * 4).getBiome());
+	    	        	else {
+	    	        		Biome tmpa = RegionEnforcer.enforce(cubeX * 16,cubeZ * 16);
+	    	        		primer.setBiome(dx, dy, dz, tmpa == null ? biomeSource.getBiome(minX + dx * 4, minY + dy * 4, minZ + dz * 4).getBiome() : tmpa);
+	    	        	}
 	        	    	
 	                }
 	            }
@@ -444,11 +455,16 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	         * cube populators from registry.
 	         **/
 	        if (!MinecraftForge.EVENT_BUS.post(new CubePopulatorEvent(world, cube))) {
-	        	CubicBiome cubicBiome;
+	        	CubicBiome cubicBiome = CubicBiome.getCubic(cube.getBiome(BlockPos.ORIGIN));
+	        	Biome tmpa = RegionEnforcer.enforce(cube.getX() * 16, cube.getZ() * 16);
+	        	if(tmpa != null)
+	        		cubicBiome = CubicBiome.getCubic(tmpa);
 	        	//TODO: figure out if we need this (and if its causing the weird generation issues)
-	        	Layer tmp = LayerManager.getLayer(cube.getY());
 	        	Region r = null;
 	        	Section s = null;
+	        	Layer tmp = null;
+	        	if(cube.getY() <= 0 || cube.getY() >= 8) {
+	        	tmp = LayerManager.getLayer(cube.getY());
 	        	if(tmp != null) {
 	        		r = RegionManager.getRegion(cube.getCoords(), world, stability.getValue(cube), pressure.getValue(cube));
 	        		if(r != null) {
@@ -461,7 +477,8 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        		else
 	        			cubicBiome = CubicBiome.getCubic(tmp.refrenceBiome());
 	        	}
-	            cubicBiome = CubicBiome.getCubic(WorldRegister.muskagBiome);
+	        	}
+	        	//FarWorld.logger.log(Level.DEBUG, cubicBiome.getBiome().getBiomeName());
 	        	CubePos pos = cube.getCoords();
 	            // For surface generators we should actually use special RNG with
 	            // seed
@@ -472,11 +489,27 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 
 	            MinecraftForge.EVENT_BUS.post(new PopulateCubeEvent.Pre(world, rand, pos.getX(), pos.getY(), pos.getZ(), false));
 	            strongholds.generateStructure(world, rand, pos);
+	            //debug test
+	            FarWorld.logger.log(Level.INFO, populators.get(cubicBiome.getBiome()).toString());
 	            populators.get(cubicBiome.getBiome()).generate(world, rand, pos, cubicBiome.getBiome());
 	            MinecraftForge.EVENT_BUS.post(new PopulateCubeEvent.Post(world, rand, pos.getX(), pos.getY(), pos.getZ(), false));
 	            CubeGeneratorsRegistry.generateWorld(world, rand, pos, cubicBiome.getBiome()); 
 		        //implement filler block overriding now that everything is already generated
 	            //(maybe check for if biome generate in section as well [if null])
+	    		/*if(tmpa != null) { just in case
+	    			for(int i = 0; i < 16; i++) 
+	    				for(int j = 60; j < 90; j++)
+	    					for(int l = 0; l < 16; l++) {
+	    						if(((OverworldBiomeSpecial)tmpa).getBlockBlacklist() != null) //not all layers have disabled blocks
+	    							for(IBlockState block : ((OverworldBiomeSpecial)tmpa).getBlockBlacklist()) {
+	    								FarWorld.logger.log(Level.INFO, block.toString());
+	    								if(cube.getBlockState(new BlockPos(i,j + cube.getY() * 16,l)) == block)
+	    									cube.setBlockState(new BlockPos(i,j + cube.getY() * 16,l), Blocks.STONE.getDefaultState());
+	    							}
+	    						if(cube.getBlockState(new BlockPos(i,j + cube.getY() * 16,l)) == Blocks.SNOW.getDefaultState()) //replace overworld filler block, stone
+	    							cube.setBlockState(new BlockPos(i,j + cube.getY() * 16,l), Blocks.BEDROCK.getDefaultState());
+	    					}
+	    		}*/
 	            if(s != null)
 	            	s.fill(cube, pressure.getValue(cube));
 	            else if(r != null)
@@ -523,7 +556,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                                blockToLocal(x), blockToLocal(y), blockToLocal(z),
 	                                getBlock(x, y, z, dx, dy, dz, v))
 	        );
-
+	        
 	    }
 
 		/**

@@ -12,6 +12,9 @@ import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.CustomGenerato
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.MinimalCustomizeWorldGui;
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.gui.CustomCubicGui;
 import io.github.opencubicchunks.cubicchunks.cubicgen.preset.fixer.CustomGeneratorSettingsFixer;
+import net.lightskin.farworld.world.FarWorldBiomeProvider;
+import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
+import net.lightskin.farworld.world.biomes.RegionEnforcer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.init.Biomes;
@@ -78,7 +81,7 @@ public class FarWorldType extends WorldType implements ICubicWorldType{
         WorldInfo fakeInfo = new WorldInfo(fakeSettings, world.getWorldInfo().getWorldName());
         fakeInfo.setTerrainType(WorldType.CUSTOMIZED);
         Biome biome = Biome.getBiomeForId(conf.biome);
-        return conf.biome < 0 ? new BiomeProvider(fakeInfo) : new BiomeProviderSingle(biome == null ? Biomes.OCEAN : biome);
+        return conf.biome < 0 ? new FarWorldBiomeProvider(fakeInfo) : new BiomeProviderSingle(biome == null ? Biomes.OCEAN : biome);
     }
 
     @Override
@@ -119,11 +122,14 @@ public class FarWorldType extends WorldType implements ICubicWorldType{
         @Override
         public int[] getInts(int areaX, int areaY, int areaWidth, int areaHeight) {
             int[] biomes = IntCache.getIntCache(areaWidth * areaHeight);
+            Biome tmpa = RegionEnforcer.enforce(areaX, areaY);
             for (int offY = 0; offY < areaHeight; ++offY) {
                 for (int offX = 0; offX < areaWidth; ++offX) {
                     int index = (offX + areaX) >> scaleBits;
                     index = Math.floorMod(index, this.biomes.size());
                     Biome biome = this.biomes.get(index);
+                    if(tmpa != null)
+                    	biome = tmpa;
                     biomes[offX + offY * areaWidth] = Biome.getIdForBiome(biome);
                 }
             }

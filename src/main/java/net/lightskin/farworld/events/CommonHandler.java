@@ -31,12 +31,16 @@ public class CommonHandler {
 	public CommonHandler() {
 		FMLCommonHandler.instance().bus().register(this);
 	}
+	@SideOnly(Side.CLIENT)
 	public static ISound curMusic = null, last = null;
+	@SideOnly(Side.CLIENT)
+	public static boolean underground = false;
 	//TODO: test this
 	@SubscribeEvent
 	public void LayerTickPlayer(TickEvent.PlayerTickEvent event) {
 		EntityPlayer player = event.player;
 		if(player.dimension == 0) {
+			underground = player.posY <= 0;
         	Layer tmp = LayerManager.getLayer(player.chunkCoordY);
         	if(tmp != null) {
                 tmp.affectPlayer(player);
@@ -47,6 +51,8 @@ public class CommonHandler {
         		curMusic = null;
         	}
 		}
+		else
+			underground = false;
 		if(player.getHeldItemMainhand().getItem() == FarWorldBlocks.nitrogenOre.ingot) {
 			BlockPos plrBlock = new BlockPos((int)player.posX,(int)player.posY,(int)player.posZ);
 			World world = player.getEntityWorld();
@@ -57,6 +63,7 @@ public class CommonHandler {
 			player.getHeldItemMainhand().damageItem(1, player);
 		}
 	}
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent //messy sound code but works well enough, pitch 8 default btw
 	public void ClientTick(TickEvent.ClientTickEvent event) {
 	    if (event.phase == TickEvent.Phase.START) {

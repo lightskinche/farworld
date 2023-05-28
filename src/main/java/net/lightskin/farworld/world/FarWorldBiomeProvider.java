@@ -9,6 +9,8 @@ import com.google.common.collect.Lists;
 
 import io.github.opencubicchunks.cubicchunks.cubicgen.common.biome.CubicBiome;
 import net.lightskin.farworld.FarWorld;
+import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
+import net.lightskin.farworld.world.biomes.RegionEnforcer;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.init.Biomes;
@@ -45,14 +47,14 @@ public class FarWorldBiomeProvider extends BiomeProvider{
     private FarWorldBiomeProvider(long seed, WorldType worldTypeIn, String options)
     {
         this();
-
+        
         if (worldTypeIn == WorldType.CUSTOMIZED && !options.isEmpty())
         {
             this.field_190945_a = ChunkGeneratorSettings.Factory.jsonToFactory(options).build();
         }
 
         GenLayer[] agenlayer = GenLayer.initializeAllBiomeGenerators(seed, worldTypeIn, this.field_190945_a);
-        this.genBiomes = agenlayer[0];
+        this.genBiomes = new FarWorldGenLayer(seed, agenlayer[0]);
         this.biomeIndexLayer = agenlayer[1];
     }
 
@@ -78,7 +80,10 @@ public class FarWorldBiomeProvider extends BiomeProvider{
     @Override
     public Biome getBiome(BlockPos pos, Biome defaultBiome)
     {
-        return this.biomeCache.getBiome(pos.getX(), pos.getZ(), defaultBiome);
+    	Biome tmpa = RegionEnforcer.enforce(pos.getX(),pos.getZ());
+    	if(tmpa == null)
+    		return this.biomeCache.getBiome(pos.getX(), pos.getZ(), defaultBiome);
+    	return tmpa;
     }
 
     /**
@@ -107,9 +112,13 @@ public class FarWorldBiomeProvider extends BiomeProvider{
 
         try
         {
+        	Biome tmpa = RegionEnforcer.enforce(x,z);
             for (int i = 0; i < width * height; ++i)
             {
-                biomes[i] = Biome.getBiome(aint[i], Biomes.DEFAULT);
+            	if(tmpa == null)
+            		biomes[i] = Biome.getBiome(aint[i], Biomes.DEFAULT);
+            	else
+            		biomes[i] = tmpa;
             }
 
             return biomes;
@@ -140,6 +149,17 @@ public class FarWorldBiomeProvider extends BiomeProvider{
     /**
      * Gets a list of biomes for the specified blocks.
      */
+    private Biome[] cheap(Biome[] listToReuse, int width, int length, int x, int z, boolean go, Biome b) {
+    	int[] aint = this.biomeIndexLayer.getInts(x, z, width, length);
+        for (int i = 0; i < width * length; ++i)
+        {
+        	if(!go)
+        		listToReuse[i] = Biome.getBiome(aint[i], Biomes.DEFAULT);
+        	else
+        		listToReuse[i] = b;
+        }
+        return listToReuse;
+    }
     @Override
     public Biome[] getBiomes(@Nullable Biome[] listToReuse, int x, int z, int width, int length, boolean cacheFlag)
     {
@@ -149,23 +169,23 @@ public class FarWorldBiomeProvider extends BiomeProvider{
         {
             listToReuse = new Biome[width * length];
         }
-
+        Biome tmpa = RegionEnforcer.enforce(x,z);
         if (cacheFlag && width == 16 && length == 16 && (x & 15) == 0 && (z & 15) == 0)
         {
             Biome[] abiome = this.biomeCache.getCachedBiomes(x, z);
             System.arraycopy(abiome, 0, listToReuse, 0, width * length);
+
+            if(tmpa != null)
+            	return cheap(listToReuse, width, length, x, z, true, tmpa);
             return listToReuse;
         }
         else
         {
-            int[] aint = this.biomeIndexLayer.getInts(x, z, width, length);
+         
+            if(tmpa != null)
+            	return cheap(listToReuse, width, length, x, z, true, tmpa);
 
-            for (int i = 0; i < width * length; ++i)
-            {
-                listToReuse[i] = Biome.getBiome(aint[i], Biomes.DEFAULT);
-            }
-
-            return listToReuse;
+            return cheap(listToReuse, width, length, x, z, false, null);
         }
     }
     //MARK

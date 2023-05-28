@@ -1,6 +1,7 @@
 package net.lightskin.farworld.world;
 
 import net.lightskin.farworld.FarWorld;
+import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
 import net.lightskin.farworld.world.biomes.MuskagBiome;
 import net.lightskin.farworld.world.type.FarWorldType;
 import net.lightskin.farworld.world.underground.CaveBiome;
@@ -15,12 +16,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class WorldRegister {
 	public static final int testBiomeID = 187;
 	public static TestBiome testBiome = new TestBiome("Test", 0.2f);
+	//ocean abyss
+	public static CaveBiome abyssalZoneBiome = new CaveBiome("Abyssal Zone",0.0f);
 	//cave biomes
 	public static CaveBiome layer = new CaveBiome("layer biome", 0.2f);
 	public static CaveBiome region = new CaveBiome("region biome", 0.2f);
 	public static CaveBiome section = new CaveBiome("sectional biome", 0.2f);
 	public static CaveBiome low = new CaveBiome("low sectional biome", 0.2f);
-	public static Biome muskagBiome = new MuskagBiome("Muskag");
 	//the hardpoint
 	
 	//the heat
@@ -29,13 +31,12 @@ public class WorldRegister {
 	public WorldRegister() {
 		//BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(testBiome, testBiomeID));
 		ForgeRegistries.BIOMES.register(testBiome.setRegistryName(FarWorld.MODID, "testBiome"));
+		ForgeRegistries.BIOMES.register(abyssalZoneBiome.setRegistryName(FarWorld.MODID,"abyssalZoneBiome"));
 		//true cave biomes start registry here
 		ForgeRegistries.BIOMES.register(layer.setRegistryName(FarWorld.MODID, "aBiome"));
 		ForgeRegistries.BIOMES.register(region.setRegistryName(FarWorld.MODID, "bBiome"));
 		ForgeRegistries.BIOMES.register(section.setRegistryName(FarWorld.MODID, "cBiome"));
 		ForgeRegistries.BIOMES.register(low.setRegistryName(FarWorld.MODID, "dBiome"));
-		
-		ForgeRegistries.BIOMES.register(muskagBiome.setRegistryName(FarWorld.MODID,"muskag"));
 		//the hardpoint
 		/*//BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(hardBiome, hardBiomeID));
 		ForgeRegistries.BIOMES.register(hardBiome.setRegistryName(FarWorld.MODID, "hardBiome"));

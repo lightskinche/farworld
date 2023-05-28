@@ -13,11 +13,17 @@ public class FarWorldBlocks {
 	
 	//stone variations
 	public static Block hardStone;
+	public static Block limestone;
+	//?
+	public static Block infectedStone;
+	public static Block frozenCobblestone;
+	public static Block forzenStone;
 	
 	//ores a
 	public static OreBlockBase copperOre;
 	public static OreBlockBase tinOre;
 	public static OreBlockBase nitrogenOre;
+	public static OreBlockBase lithiumOre;
 	public FarWorldBlocks() {
 		//gases
 		decayGas = new DecayGas("decay_gas");
@@ -27,10 +33,11 @@ public class FarWorldBlocks {
 		//ores
 		copperOre = new OreBlockBase("copper_ore", Material.ROCK, 10); 
 		tinOre = new OreBlockBase("tin_ore", Material.ROCK, 20);
-		{
+		
 		nitrogenOre = new OreBlockBase("nitrogen_ore", Material.ROCK, 50);
 		nitrogenOre.setHardness(20).setHarvestLevel("pickaxe", 3);
 		nitrogenOre.ingot.setMaxDamage(1024);
-		}
+		//goofy ahh ore
+		lithiumOre = new OreBlockBase("lithium_ore", Material.ROCK, 50);
 	}
 }

@@ -6,6 +6,8 @@ import net.lightskin.farworld.events.MinecraftForgeHandler;
 import net.lightskin.farworld.events.CommonHandler;
 import net.lightskin.farworld.te.FarWorldTileEntities;
 import net.lightskin.farworld.world.WorldRegister;
+import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
+import net.lightskin.farworld.world.biomes.RegionEnforcer;
 import net.lightskin.farworld.world.type.FarWorldType;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +27,7 @@ public class FarWorld
     public static Logger logger;
 
     static public WorldRegister worldRegister;
+    static public FarWorldOverworldBiomes overworldBiomes;
     static public FarWorldBlocks farWorldBlocks;
     static public FarWorldTileEntities farWorldTileEntities;
     static public FarWorldPotions farWorldPotions;
@@ -39,6 +42,8 @@ public class FarWorld
     	farWorldTileEntities = new FarWorldTileEntities();
     	farWorldPotions = new FarWorldPotions();
     	farWorldBlocks = new FarWorldBlocks();
+    	overworldBiomes = new FarWorldOverworldBiomes();
+    	RegionEnforcer.setRules();
     	worldRegister = new WorldRegister();
     	FarWorldType.create();
         logger = event.getModLog();
