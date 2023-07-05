@@ -19,7 +19,7 @@ public abstract class Region {
 	public abstract Section[] regionalSections();
 	public Section getSection(int y) {
 		for(Section a: regionalSections()) {
-			if(a.beginHeight() > y && a.endHeight() < y)
+			if(a.beginHeight() >= y && a.endHeight() <= y)
 				return a;
 		}
 		return null;
@@ -28,9 +28,14 @@ public abstract class Region {
 	public abstract Biome refrenceBiome();
 	public abstract IBlockState regionalFillerBlock();
  	public abstract IBlockState[] regionDisabledBlocks();
+ 	//will max between this and layer will be chosen for section to add to
+	public float getTemperatureLavaUnits() { //air temp in lu-- lava units
+		return 0.05f; //recall that 0.5 = temp of fire, 0 = 'normal'
+	}
  	
 	public void fill(ICube cube) {
 		Layer layer = LayerManager.getLayer(cube.getY());
+		if(regionDisabledBlocks() != null || layer != null || regionalFillerBlock() != Blocks.STONE.getDefaultState()) //if we have actual reason to 'fill'
 		for(int i = 0; i < 16; i++) 
 			for(int j = 0; j < 16; j++)
 				for(int l = 0; l < 16; l++) {

@@ -22,7 +22,6 @@ public class WeaponEntityBase extends Entity{
 	@Override
 	protected void entityInit() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

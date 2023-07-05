@@ -2,6 +2,10 @@ package net.lightskin.farworld.world.biomes;
 
 import net.lightskin.farworld.FarWorld;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
+import net.lightskin.farworld.sound.FarWorldMusicalSound;
+import net.lightskin.farworld.sound.MusicTable;
+import net.lightskin.farworld.world.MusicalBiomeAboveGround;
+import net.lightskin.farworld.world.MusicalBiomeBase;
 import net.lightskin.farworld.world.underground.CaveBiomeDecorator;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.BiomeProperties;
 
-public class MuskagBiome extends OverworldBiomeSpecial{
+public class MuskagBiome extends OverworldBiomeSpecial implements MusicalBiomeAboveGround{
 	public MuskagBiome() {
 		super(new BiomeProperties("Muskag")
             	.setBaseHeight(0.0F)
@@ -35,5 +39,30 @@ public class MuskagBiome extends OverworldBiomeSpecial{
 		world.setBlockState(new BlockPos(x + 1, y + 1, z), Blocks.LOG.getDefaultState());
 		world.setBlockState(new BlockPos(x - 1, y + 2, z), Blocks.LOG.getDefaultState());
 		world.setBlockState(new BlockPos(x + 1, y + 2, z), Blocks.LOG.getDefaultState());
+	}
+	@Override
+	public FarWorldMusicalSound mobAttackMusic() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public FarWorldMusicalSound mobAttackPlayerMusic() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public FarWorldMusicalSound nightMusic() {
+		// TODO Auto-generated method stub
+		return MusicTable.muskagNight;
+	}
+	@Override
+	public FarWorldMusicalSound backgroundMusic() {
+		// TODO Auto-generated method stub
+		return MusicTable.muskagBackground;
+	}
+	@Override
+	public FarWorldMusicalSound desperationMusic() {
+		// TODO Auto-generated method stub
+		return MusicTable.muskagDesperation;
 	}
 }

@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.layers;
+package net.lightskin.farworld.world.underground.layers.test;
 
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.world.ICube;
@@ -12,8 +12,7 @@ import net.lightskin.farworld.world.WorldRegister;
 import net.lightskin.farworld.world.underground.FarWorldCaveGenerator;
 import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.OreEntry;
-import net.lightskin.farworld.world.underground.biomes.TestBiome;
-import net.lightskin.farworld.world.underground.generators.TestLayerCaveGenerator;
+import net.lightskin.farworld.world.underground.region.test.biomes.TestBiome;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.init.Blocks;
@@ -39,10 +38,6 @@ public class TestLayer extends Layer{
 				for(int l = 0; l < 16; l++)
 					cube.setBlockState(i, j, l, Blocks.AIR.getDefaultState());
 		*/
-	}
-	@Override
-	public ISound getMusic() {
-		return MusicTable.SAS;
 	}
 	
 	@Override

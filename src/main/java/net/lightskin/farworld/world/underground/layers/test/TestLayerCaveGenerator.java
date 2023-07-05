@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.generators;
+package net.lightskin.farworld.world.underground.layers.test;
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;

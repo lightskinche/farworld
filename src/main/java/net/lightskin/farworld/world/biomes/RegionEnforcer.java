@@ -14,8 +14,9 @@ public class RegionEnforcer {
 			//in chunk coords
 			new OverworldRegion(0,0,1000,null),
 			new OverworldRegion(0,0,2000,FarWorldOverworldBiomes.muskagBiome),
-			new OverworldRegion(12500,-50000000,15000,50000000,FarWorldOverworldBiomes.oceanicAbyssBiome),
-			new OverworldRegion(10000,-50000000,20000,50000000,FarWorldOverworldBiomes.oceanicThresholdBiome)
+			new OverworldRegion(0,0,10000,null),
+			new OverworldRegion(0,0,15000,FarWorldOverworldBiomes.oceanicThresholdBiome),
+			new OverworldRegion(0,0,20000,FarWorldOverworldBiomes.oceanicAbyssBiome),
 			};
 	public static HashMap<OverworldBiomeSpecial,TempSuperCategory> specialCategory = new HashMap<OverworldBiomeSpecial, TempSuperCategory>();
 	

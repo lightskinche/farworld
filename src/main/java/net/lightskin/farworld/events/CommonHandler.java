@@ -5,19 +5,29 @@ import io.github.opencubicchunks.cubicchunks.api.world.ICube;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.blocks.GasBlockBase;
 import net.lightskin.farworld.effects.FarWorldPotions;
+import net.lightskin.farworld.sound.FarWorldMusicalSound;
+import net.lightskin.farworld.sound.MusicTable;
+import net.lightskin.farworld.world.MusicalBiomeAboveGround;
+import net.lightskin.farworld.world.MusicalBiomeBase;
 import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.manager.LayerManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -32,27 +42,34 @@ public class CommonHandler {
 		FMLCommonHandler.instance().bus().register(this);
 	}
 	@SideOnly(Side.CLIENT)
-	public static ISound curMusic = null, last = null;
+	public static FarWorldMusicalSound cur_music;
 	@SideOnly(Side.CLIENT)
-	public static boolean underground = false;
+	public static Biome cur_biome;
+	//public static boolean underground = false;
 	//TODO: test this
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void LayerTickPlayer(TickEvent.PlayerTickEvent event) {
 		EntityPlayer player = event.player;
 		if(player.dimension == 0) {
-			underground = player.posY <= 0;
         	Layer tmp = LayerManager.getLayer(player.chunkCoordY);
         	if(tmp != null) {
                 tmp.affectPlayer(player);
-                curMusic = tmp.getMusic();
         	}
-        	else {
-        		last = curMusic;
-        		curMusic = null;
+        	cur_music = null;
+        	Biome tmpa = player.getEntityWorld().getBiome(new BlockPos(player.posX,player.posY,player.posZ));
+        	cur_biome = tmpa;
+        	if(tmpa instanceof MusicalBiomeBase) {
+        		if(player.getHealth() <= player.getMaxHealth() / 5)
+        			cur_music = ((MusicalBiomeBase)tmpa).desperationMusic();
+        		else if(player.getEntityWorld().calculateSkylightSubtracted(0) < 7) //don't know why this is the other way around, but it works
+        			cur_music = ((MusicalBiomeBase)tmpa).backgroundMusic();
+        		else if(tmpa instanceof MusicalBiomeAboveGround)
+        			cur_music = ((MusicalBiomeAboveGround)tmpa).nightMusic();
         	}
+        	else if(player.getHealth() <= player.getMaxHealth() / 5)
+        		cur_music = MusicTable.defaultDesperation;
 		}
-		else
-			underground = false;
 		if(player.getHeldItemMainhand().getItem() == FarWorldBlocks.nitrogenOre.ingot) {
 			BlockPos plrBlock = new BlockPos((int)player.posX,(int)player.posY,(int)player.posZ);
 			World world = player.getEntityWorld();
@@ -68,18 +85,13 @@ public class CommonHandler {
 	public void ClientTick(TickEvent.ClientTickEvent event) {
 	    if (event.phase == TickEvent.Phase.START) {
     		// client tick start,do thihg here
-    		SoundHandler sh = Minecraft.getMinecraft().getSoundHandler();
-	    	if(curMusic != null) {
-	    		if(!sh.isSoundPlaying(curMusic)){
-	    			sh.playSound(curMusic);
-	    		}
+	    	if(cur_music != null)
+	    		MusicTable.tryPlayMusic(cur_music);
+	    	else {
+	    		if(MusicTable.last != null)
+	    			MusicTable.sh.stopSound(MusicTable.last);
+	    		MusicTable.last = null;
 	    	}
-	    	if(last != null){
-	    		if(sh.isSoundPlaying(last)) {
-	    			sh.stopSound(last);
-	    		}
-	    	}
-	    	curMusic = null; last = null;
 	    }
 	}
 }

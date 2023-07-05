@@ -14,10 +14,14 @@ public class FarWorldBlocks {
 	//stone variations
 	public static Block hardStone;
 	public static Block limestone;
+	public static Block fracturedStone;
 	//?
 	public static Block infectedStone;
 	public static Block frozenCobblestone;
 	public static Block forzenStone;
+	
+	//split region ores
+	public static Block rupturedCoal;
 	
 	//ores a
 	public static OreBlockBase copperOre;
@@ -30,7 +34,9 @@ public class FarWorldBlocks {
 		nitrogenGas = new NitrogenGas("nitrogen_gas");
 		//stone varations
 		hardStone = new BlockBase("hard_stone", Material.ROCK);
+		fracturedStone = new BlockBase("fractured_stone", Material.ROCK);
 		//ores
+		rupturedCoal = new BlockBase("ruptured_coal", Material.ROCK);
 		copperOre = new OreBlockBase("copper_ore", Material.ROCK, 10); 
 		tinOre = new OreBlockBase("tin_ore", Material.ROCK, 20);
 		

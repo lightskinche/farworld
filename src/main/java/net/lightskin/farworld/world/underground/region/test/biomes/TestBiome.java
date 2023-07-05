@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.biomes;
+package net.lightskin.farworld.world.underground.region.test.biomes;
 
 import net.lightskin.farworld.world.underground.CaveBiome;
 import net.minecraft.world.biome.Biome;

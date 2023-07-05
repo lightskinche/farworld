@@ -1,23 +1,22 @@
-package net.lightskin.farworld.world.underground.region;
+package net.lightskin.farworld.world.underground.region.medium.split;
 
-import io.github.opencubicchunks.cubicchunks.api.world.ICube;
-import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.world.WorldRegister;
-import net.lightskin.farworld.world.underground.CaveBiome;
 import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.Region;
 import net.lightskin.farworld.world.underground.Section;
-import net.lightskin.farworld.world.underground.sections.TestSection;
+import net.lightskin.farworld.world.underground.region.medium.split.sections.UnheldSection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.Biome;
 
-public class TestRegion extends Region{
-	private Section[] sections = new Section[] {new TestSection(20, 8), new TestSection(0, 20)};
+public class SplitRegion extends Region{
+	private static Section[] sections = {
+			new UnheldSection(2,2)
+	};
 	@Override
 	public OreEntry[] regionalOres() {
 		// TODO Auto-generated method stub
-		return new OreEntry[] {new OreEntry(Blocks.BRICK_BLOCK.getDefaultState(), 9, 5, 256f / 32f / (256f / ICube.SIZE))};
+		return null;
 	}
 
 	@Override
@@ -35,19 +34,19 @@ public class TestRegion extends Region{
 	@Override
 	public Biome refrenceBiome() {
 		// TODO Auto-generated method stub
-		return WorldRegister.region;
+		return WorldRegister.splitRefrenceBiome;
 	}
 
 	@Override
 	public IBlockState regionalFillerBlock() {
 		// TODO Auto-generated method stub
-		return FarWorldBlocks.hardStone.getDefaultState();
+		return Blocks.STONE.getDefaultState();
 	}
 
 	@Override
 	public IBlockState[] regionDisabledBlocks() {
 		// TODO Auto-generated method stub
-		return new IBlockState[] {Blocks.COAL_ORE.getDefaultState()};
+		return null;
 	}
 
 }

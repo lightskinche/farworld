@@ -3,18 +3,25 @@ package net.lightskin.farworld;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.effects.FarWorldPotions;
 import net.lightskin.farworld.events.MinecraftForgeHandler;
+import net.lightskin.farworld.sound.MusicTable;
 import net.lightskin.farworld.events.CommonHandler;
 import net.lightskin.farworld.te.FarWorldTileEntities;
 import net.lightskin.farworld.world.WorldRegister;
 import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
 import net.lightskin.farworld.world.biomes.RegionEnforcer;
 import net.lightskin.farworld.world.type.FarWorldType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
 //tears from heaven for water areas
 @Mod(modid = FarWorld.MODID, name = FarWorld.NAME, version = FarWorld.VERSION)
@@ -45,6 +52,7 @@ public class FarWorld
     	overworldBiomes = new FarWorldOverworldBiomes();
     	RegionEnforcer.setRules();
     	worldRegister = new WorldRegister();
+    	//farWorldPrimaryChannel = NetworkRegistry.INSTANCE.newSimpleChannel(new ResourceLocation(MODID, "primary").toString());
     	FarWorldType.create();
         logger = event.getModLog();
     }

@@ -14,7 +14,7 @@ public class FarWorldMusicalSound implements ISound{
 	protected String name = "default";
 	protected String displayname = "This Is A Placeholder";
 	protected String loc = "null";
-	protected float PITCH = 0.5f;
+	protected float PITCH = 1.0f;
 	
 	public FarWorldMusicalSound(String filename, String fancyname) {
 		name = filename;

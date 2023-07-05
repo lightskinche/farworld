@@ -2,11 +2,8 @@ package net.lightskin.farworld.world;
 
 import java.util.List;
 import java.util.Random;
-
 import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
 import io.github.opencubicchunks.cubicchunks.cubicgen.common.biome.CubicBiome;
 import net.lightskin.farworld.FarWorld;
 import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
@@ -55,7 +52,7 @@ public class FarWorldBiomeProvider extends BiomeProvider{
 
         GenLayer[] agenlayer = GenLayer.initializeAllBiomeGenerators(seed, worldTypeIn, this.field_190945_a);
         this.genBiomes = new FarWorldGenLayer(seed, agenlayer[0]);
-        this.biomeIndexLayer = agenlayer[1];
+        this.biomeIndexLayer = agenlayer[1]; //before was just agenlayer[1] just in case this breaks everything-- it did
     }
 
     public FarWorldBiomeProvider(WorldInfo info)

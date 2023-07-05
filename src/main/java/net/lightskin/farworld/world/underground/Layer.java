@@ -49,6 +49,7 @@ public abstract class Layer {
 	}
 	public void fill(ICube cube) {
 		
+		if(disabledBlocks() != null || fillerBlock() != Blocks.STONE.getDefaultState()) //if we have an actual reason to 'fill' anything
 		for(int i = 0; i < 16; i++) 
 			for(int j = 0; j < 16; j++)
 				for(int l = 0; l < 16; l++) {
@@ -59,10 +60,6 @@ public abstract class Layer {
 					if(cube.getBlockState(new BlockPos(i,j + cube.getY() * 16,l)) == Blocks.STONE.getDefaultState()) //replace overworld filler block, stone
 						cube.setBlockState(new BlockPos(i,j + cube.getY() * 16,l), fillerBlock());
 				}
-	}
-
-	public ISound getMusic() {
-		return null;
 	}
 	
 	public float getTemperatureLavaUnits() { //air temp in lu-- lava units

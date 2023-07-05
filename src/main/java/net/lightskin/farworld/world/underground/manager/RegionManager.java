@@ -1,6 +1,9 @@
 package net.lightskin.farworld.world.underground.manager;
 
 import java.util.HashMap;
+
+import org.apache.logging.log4j.Level;
+
 import io.github.opencubicchunks.cubicchunks.api.util.Coords;
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.world.ICube;
@@ -10,8 +13,9 @@ import net.lightskin.farworld.world.type.FarWorldTerrianGenerator;
 import net.lightskin.farworld.world.underground.CaveBiome;
 import net.lightskin.farworld.world.underground.Region;
 import net.lightskin.farworld.world.underground.gradient.StabilityGradient;
-import net.lightskin.farworld.world.underground.region.AbyssRegion;
-import net.lightskin.farworld.world.underground.region.TestRegion;
+import net.lightskin.farworld.world.underground.region.medium.split.SplitRegion;
+import net.lightskin.farworld.world.underground.region.ocean.abyss.AbyssRegion;
+import net.lightskin.farworld.world.underground.region.test.TestRegion;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,7 +26,7 @@ import net.minecraft.world.biome.Biome.TempCategory;
 public class RegionManager{
 	public static HashMap<TempSuperCategory, Region[]> regionMap = new HashMap<TempSuperCategory, Region[]>();
 	static {
-		regionMap.put(TempSuperCategory.MEDIUM, new Region[] {});
+		regionMap.put(TempSuperCategory.MEDIUM, new Region[] {new SplitRegion()});
 		regionMap.put(TempSuperCategory.COLD, new Region[] {});
 		regionMap.put(TempSuperCategory.WARM, new Region[] {});
 		regionMap.put(TempSuperCategory.OCEAN, new Region[] {new TestRegion()}); //ocean has radiation i guess
@@ -48,9 +52,9 @@ public class RegionManager{
 	}*/
 	
 	public static Region getRegion(CubePos pos, World world, double stability, double pressure) {
-		TempCategory c = world.getBiome(new BlockPos((pos.getX() + 7) * 16, 64, (pos.getZ() + 7) * 8)).getTempCategory();
+		TempCategory c = world.getBiome(new BlockPos(pos.getX() * 16 + 7, 64, pos.getZ() * 8 + 7)).getTempCategory();
 		TempSuperCategory a = TempSuperCategory.NONE;
-		Biome tmpa = RegionEnforcer.enforce(pos.getX() * 16, pos.getX() * 16);
+		Biome tmpa = RegionEnforcer.enforce(pos.getX() * 16, pos.getZ() * 16);
 		if(RegionEnforcer.specialCategory.get(tmpa) != null)
 			a = RegionEnforcer.specialCategory.get(tmpa);
 		else if(c == TempCategory.COLD)

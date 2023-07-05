@@ -58,11 +58,11 @@ import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.Region;
 import net.lightskin.farworld.world.underground.Section;
-import net.lightskin.farworld.world.underground.biomes.TestBiome;
 import net.lightskin.farworld.world.underground.gradient.PressureGradient;
 import net.lightskin.farworld.world.underground.gradient.StabilityGradient;
 import net.lightskin.farworld.world.underground.manager.LayerManager;
 import net.lightskin.farworld.world.underground.manager.RegionManager;
+import net.lightskin.farworld.world.underground.region.test.biomes.TestBiome;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;
@@ -397,12 +397,12 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        generateStructures(primer, new CubePos(cubeX, cubeY, cubeZ));
 	        //see if this causes problems
 	        //if (true) { //consider optimizing later if it gets really bad
-	        if (fillCubeBiomes || cubeY <= 0 || cubeY >= 8 || RegionEnforcer.enforce(cubeX * 16, cubeZ * 16) != null) {
+	        if (fillCubeBiomes || cubeY <= 2 || cubeY >= 8 || RegionEnforcer.enforce(cubeX * 16, cubeZ * 16) != null) {
 	           fill3dBiomes(cubeX, cubeY, cubeZ, primer);
 	        }
 	        return primer;
 	    }
-	    
+	    //TODO: fix no rain or snow visible on biomes. don't konw why that happens but fix it, seriously
 	    private void fill3dBiomes(int cubeX, int cubeY, int cubeZ, CubePrimer primer) {
 	        int minX = cubeX * 4;
 	        int minY = cubeY * 4;
@@ -411,7 +411,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	            for (int dy = 0; dy < 4; dy++) {
 	                for (int dz = 0; dz < 4; dz++) {
 	    	        	Layer tmp = null;
-	    	        	if(cubeY <= 0 || cubeY >= 8)
+	    	        	if(cubeY <= 2 || cubeY >= 8)
 	    	        		tmp = LayerManager.getLayer(cubeY);
     	        		Region r = null;
 	    	        	if(tmp != null) {
@@ -463,7 +463,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        	Region r = null;
 	        	Section s = null;
 	        	Layer tmp = null;
-	        	if(cube.getY() <= 0 || cube.getY() >= 8) {
+	        	if(cube.getY() <= 2 || cube.getY() >= 8) {
 	        	tmp = LayerManager.getLayer(cube.getY());
 	        	if(tmp != null) {
 	        		r = RegionManager.getRegion(cube.getCoords(), world, stability.getValue(cube), pressure.getValue(cube));
@@ -471,10 +471,10 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        		s = r.getSection(cube.getY());
 	        		if(s != null)
 	        			cubicBiome = CubicBiome.getCubic(s.sectionalBiome(pressure.getValue(cube)));
-	        		else
+	        		else if(cube.getY() <= 0 || cube.getY() >= 8) //figure out why start earlier idk
 	        			cubicBiome = CubicBiome.getCubic(r.refrenceBiome());
 	        		}
-	        		else
+	        		else if(cube.getY() <= 0 || cube.getY() >= 8)
 	        			cubicBiome = CubicBiome.getCubic(tmp.refrenceBiome());
 	        	}
 	        	}
@@ -489,8 +489,6 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 
 	            MinecraftForge.EVENT_BUS.post(new PopulateCubeEvent.Pre(world, rand, pos.getX(), pos.getY(), pos.getZ(), false));
 	            strongholds.generateStructure(world, rand, pos);
-	            //debug test
-	            FarWorld.logger.log(Level.INFO, populators.get(cubicBiome.getBiome()).toString());
 	            populators.get(cubicBiome.getBiome()).generate(world, rand, pos, cubicBiome.getBiome());
 	            MinecraftForge.EVENT_BUS.post(new PopulateCubeEvent.Post(world, rand, pos.getX(), pos.getY(), pos.getZ(), false));
 	            CubeGeneratorsRegistry.generateWorld(world, rand, pos, cubicBiome.getBiome()); 

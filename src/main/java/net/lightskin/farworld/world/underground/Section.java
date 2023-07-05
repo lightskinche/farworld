@@ -26,12 +26,13 @@ public abstract class Section {
 	public OreEntry[] parentOres() {
 		ArrayList<OreEntry> masterList = new ArrayList<OreEntry>();
 		masterList.add(new OreEntry(sectionalRegion().regionalFillerBlock(),11,5,256f / 128f / (256f / ICube.SIZE)));
+		if(sectionalRegion().regionalOres() != null)
 		for(OreEntry tmp: sectionalRegion().regionalOres())
 			masterList.add(tmp);
 		Layer last = null; //prevents duplicate ore repitions by getting the same layer over and over; each layer registers its ores once like this
 		for(int i = beginHeight(); i >= endHeight(); i--) {
 			Layer tmp = LayerManager.getLayer(i);
-			if(tmp != null && tmp != last) {
+			if(tmp != null && tmp != last && tmp.layerOres() != null) {
 				for(OreEntry ore: tmp.layerOres())
 					masterList.add(ore);
 				masterList.add(new OreEntry(tmp.fillerBlock(),11,5,256f / 256f / (256f / ICube.SIZE))); //reference layers is rarer
