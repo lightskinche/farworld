@@ -21,7 +21,7 @@ public class FarWorldBlocks {
 	public static Block forzenStone;
 	
 	//split region ores
-	public static Block rupturedCoal;
+	public static OreBlockBase rupturedCoal;
 	
 	//ores a
 	public static OreBlockBase copperOre;
@@ -36,7 +36,7 @@ public class FarWorldBlocks {
 		hardStone = new BlockBase("hard_stone", Material.ROCK);
 		fracturedStone = new BlockBase("fractured_stone", Material.ROCK);
 		//ores
-		rupturedCoal = new BlockBase("ruptured_coal", Material.ROCK);
+		rupturedCoal = new OreBlockBase("ruptured_coal", Material.ROCK, 10);
 		copperOre = new OreBlockBase("copper_ore", Material.ROCK, 10); 
 		tinOre = new OreBlockBase("tin_ore", Material.ROCK, 20);
 		

@@ -37,7 +37,7 @@ public class FallsCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 121;
+    public static final int CAVE_RARITY = 41;
 
     /**
      * Maximum amount of starting nodes
@@ -53,7 +53,7 @@ public class FallsCaveGenerator implements IFlexHandlerStructureGenerator {
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 340;
+    public static final int LARGE_NODE_MAX_BRANCHES = 34;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual

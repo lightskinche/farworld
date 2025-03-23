@@ -33,7 +33,7 @@ public class FallsRavineGenerator implements IFlexHandlerStructureGenerator{
      * <p>
      * Multiply by 16 and divide by 8: 16 cubes in vanilla chunks, only one in 8 cubes has structures generated
      */
-    private static final int RAVINE_RARITY = 200 * 16;
+    private static final int RAVINE_RARITY = 25;
 
     /**
      * Add this value to lava height (Y below which lava exists)
@@ -54,7 +54,7 @@ public class FallsRavineGenerator implements IFlexHandlerStructureGenerator{
     /**
      * Value added to the size of the cave (radius)
      */
-    private static final double RAVINE_SIZE_ADD = 9.5D;
+    private static final double RAVINE_SIZE_ADD = 7.5D;
 
     private static final double MIN_RAND_SIZE_FACTOR = 1.0;
     private static final double MAX_RAND_SIZE_FACTOR = 2.5;

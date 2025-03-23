@@ -1,27 +1,23 @@
-package net.lightskin.farworld.world.underground.layers.falls;
+package net.lightskin.farworld.world.underground.layers.heat;
 
 import java.util.Random;
-
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.CustomGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.IFlexHandlerStructureGenerator;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.world.WorldRegister;
-import net.lightskin.farworld.world.underground.FarWorldRavineGenerator;
 import net.lightskin.farworld.world.underground.Layer;
-import net.lightskin.farworld.world.underground.SimplexNoise;
-import net.lightskin.farworld.world.underground.generators.caverns.CavernsCaveGenerator;
-import net.lightskin.farworld.world.underground.generators.falls.FallsCaveGenerator;
-import net.lightskin.farworld.world.underground.generators.falls.FallsRavineGenerator;
+import net.lightskin.farworld.world.underground.generators.heat.HeatCaveGenerator;
+import net.lightskin.farworld.world.underground.generators.heat.HeatRavineGenerator;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.Biome;
 
-public class FallsLayer extends Layer{
+public class HeatLayer extends Layer{
 
-	public FallsLayer(int begin_in, int length_in) {
+	public HeatLayer(int begin_in, int length_in) {
 		super(begin_in, length_in);
 		// TODO Auto-generated constructor stub
 	}
@@ -29,7 +25,7 @@ public class FallsLayer extends Layer{
 	@Override
 	public Biome refrenceBiome() {
 		// TODO Auto-generated method stub
-		return WorldRegister.fallsReferenceBiome;
+		return WorldRegister.heatReferenceBiome;
 	}
 	@Override
 	public IBlockState fillerBlock() { //like how filler blocks work in dims
@@ -58,10 +54,10 @@ public class FallsLayer extends Layer{
 	}*/
 	@Override
 	public IFlexHandlerStructureGenerator refrenceCaves() {
-		return new FallsCaveGenerator();
+		return new HeatCaveGenerator();
 	}
 	@Override
 	public IFlexHandlerStructureGenerator refrenceRavines(CustomGeneratorSettings conf) {
-		return new FallsRavineGenerator(conf);
+		return new HeatRavineGenerator(conf);
 	}
 }

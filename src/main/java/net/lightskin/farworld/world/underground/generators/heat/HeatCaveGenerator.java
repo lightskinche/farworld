@@ -37,28 +37,28 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 16 * 7 / (2 * 2 * 2);
+    public static final int CAVE_RARITY = 140;
 
     /**
      * Maximum amount of starting nodes
      */
-    public static final int MAX_INIT_NODES = 10;
+    public static final int MAX_INIT_NODES = 50;
 
     /**
      * 1 in LARGE_NODE_RARITY initial attempts will result in large node
      */
-    public static final int LARGE_NODE_RARITY = 5;
+    public static final int LARGE_NODE_RARITY = 1;
 
     /**
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 10;
+    public static final int LARGE_NODE_MAX_BRANCHES = 250;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual
      */
-    public static final int BIG_CAVE_RARITY = 10;
+    public static final int BIG_CAVE_RARITY = 5;
 
     /**
      * Value added to the size of the cave (radius)
