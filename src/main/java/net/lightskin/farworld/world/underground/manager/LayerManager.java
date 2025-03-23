@@ -2,15 +2,13 @@ package net.lightskin.farworld.world.underground.manager;
 
 import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.layers.*;
+import net.lightskin.farworld.world.underground.layers.falls.FallsLayer;
 import net.lightskin.farworld.world.underground.layers.hardware.HardwareLayer;
 
 public class LayerManager {
 	public static Layer[] layerList = {
-			//new TestLayer(20, 8),
-			//new TestLayer(2, 20)
-			//layer 1 should be asbestos and dust ores
-			//standard vanilla
-			new HardwareLayer(2,2)
+			new HardwareLayer(2,2),
+			new FallsLayer(0,12)
 			};
 	
 	public static Layer getLayer(int y) {

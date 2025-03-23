@@ -62,7 +62,6 @@ import net.lightskin.farworld.world.underground.gradient.PressureGradient;
 import net.lightskin.farworld.world.underground.gradient.StabilityGradient;
 import net.lightskin.farworld.world.underground.manager.LayerManager;
 import net.lightskin.farworld.world.underground.manager.RegionManager;
-import net.lightskin.farworld.world.underground.region.test.biomes.TestBiome;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStone;

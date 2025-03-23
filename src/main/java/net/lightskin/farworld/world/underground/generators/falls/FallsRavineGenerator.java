@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.generators.cavern;
+package net.lightskin.farworld.world.underground.generators.falls;
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
@@ -27,20 +27,20 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.IFlexHandlerStructureGenerator;
 
-public class CavernRavineGenerator implements IFlexHandlerStructureGenerator{
+public class FallsRavineGenerator implements IFlexHandlerStructureGenerator{
 	  /**
      * Vanilla value: 50
      * <p>
      * Multiply by 16 and divide by 8: 16 cubes in vanilla chunks, only one in 8 cubes has structures generated
      */
-    private static final int RAVINE_RARITY = 50 * 16 / (2 * 2 * 2);
+    private static final int RAVINE_RARITY = 200 * 16;
 
     /**
      * Add this value to lava height (Y below which lava exists)
      * <p>
      * Positive value to increase amount of lava, negative to decrease.
      */
-    private static final double LAVA_HEIGHT_OFFSET = -10;
+    private static final double LAVA_HEIGHT_OFFSET = -25;
 
     /**
      * Add Y value multiplied by this to lava height
@@ -49,25 +49,25 @@ public class CavernRavineGenerator implements IFlexHandlerStructureGenerator{
      */
     private static final double LAVA_HEIGHT_Y_FACTOR = -0.1;
 
-    private static final double VERT_SIZE_FACTOR = 3.0;
+    private static final double VERT_SIZE_FACTOR = 20.0;
 
     /**
      * Value added to the size of the cave (radius)
      */
-    private static final double RAVINE_SIZE_ADD = 5.5D;
+    private static final double RAVINE_SIZE_ADD = 9.5D;
 
-    private static final double MIN_RAND_SIZE_FACTOR = 0.75;
-    private static final double MAX_RAND_SIZE_FACTOR = 1.00;
+    private static final double MIN_RAND_SIZE_FACTOR = 1.0;
+    private static final double MAX_RAND_SIZE_FACTOR = 2.5;
 
     /**
      * After each step the Y direction component will be multiplied by this value
      */
-    private static final float FLATTEN_FACTOR = 0.7f;
+    private static final float FLATTEN_FACTOR = 0.1f;
 
     /**
      * Each step ravine direction angles will be changed by this fraction of values that specify how direction changes
      */
-    private static final float DIRECTION_CHANGE_FACTOR = 0.05f;
+    private static final float DIRECTION_CHANGE_FACTOR = 0.15f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
@@ -82,12 +82,12 @@ public class CavernRavineGenerator implements IFlexHandlerStructureGenerator{
     /**
      * Maximum value by which horizontal cave direction randomly changes each step, lower values are much more likely.
      */
-    private static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 4.0f;
+    private static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 7.0f;
 
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    private static final float MAX_ADD_DIRECTION_CHANGE_VERT = 2.0f;
+    private static final float MAX_ADD_DIRECTION_CHANGE_VERT = 4.0f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,
@@ -98,7 +98,7 @@ public class CavernRavineGenerator implements IFlexHandlerStructureGenerator{
      * Higher values will make width difference between top/bottom and center smaller
      * lower values will make top and bottom of the ravine smaller. Values less than one will shrink size of the ravine
      */
-    private static final double STRETCH_Y_FACTOR = 6.0;
+    private static final double STRETCH_Y_FACTOR = 50.0;
 
     /**
      * Controls which blocks can be replaced by cave
@@ -115,7 +115,7 @@ public class CavernRavineGenerator implements IFlexHandlerStructureGenerator{
      */
     @Nonnull private float[] widthDecreaseFactors = new float[1024];
 
-    public CavernRavineGenerator(CustomGeneratorSettings cfg) {
+    public FallsRavineGenerator(CustomGeneratorSettings cfg) {
         this.maxCubeY = Coords.blockToCube(cfg.expectedBaseHeight);
     }
 

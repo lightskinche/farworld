@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.layers.test;
+package net.lightskin.farworld.world.underground.generators.falls;
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
-public class TestLayerCaveGenerator implements IFlexHandlerStructureGenerator {
+public class FallsCaveGenerator implements IFlexHandlerStructureGenerator {
     //=============================================
     //Possibly configurable values
     //=============================================
@@ -37,12 +37,12 @@ public class TestLayerCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 16 * 7 / (2);
+    public static final int CAVE_RARITY = 121;
 
     /**
      * Maximum amount of starting nodes
      */
-    public static final int MAX_INIT_NODES = 20;
+    public static final int MAX_INIT_NODES = 25;
 
     /**
      * 1 in LARGE_NODE_RARITY initial attempts will result in large node
@@ -53,62 +53,62 @@ public class TestLayerCaveGenerator implements IFlexHandlerStructureGenerator {
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 20;
+    public static final int LARGE_NODE_MAX_BRANCHES = 340;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual
      */
-    public static final int BIG_CAVE_RARITY = 1;
+    public static final int BIG_CAVE_RARITY = 20;
 
     /**
      * Value added to the size of the cave (radius)
      */
-    public static final double CAVE_SIZE_ADD = 5.5D;
+    public static final double CAVE_SIZE_ADD = 15.5D;
 
     /**
      * In 1 of STEEP_STEP_RARITY steps, cave will be flattened using STEEPER_FLATTEN_FACTOR instead of FLATTEN_FACTOR
      */
-    public static final int STEEP_STEP_RARITY = 6;
+    public static final int STEEP_STEP_RARITY = 1;
 
     /**
      * After each step the Y direction component will be multiplied by this value, unless steeper cave is allowed
      */
-    public static final float FLATTEN_FACTOR = 0.7f;
+    public static final float FLATTEN_FACTOR = 1.7f;
 
     /**
      * If steeper cave is allowed - this value will be used instead of FLATTEN_FACTOR
      */
-    public static final float STEEPER_FLATTEN_FACTOR = 0.92f;
+    public static final float STEEPER_FLATTEN_FACTOR = 200.0f;
 
     /**
      * Each step cave direction angles will be changed by this fraction of values that specify how direction changes
      */
-    public static final float DIRECTION_CHANGE_FACTOR = 0.1f;
+    public static final float DIRECTION_CHANGE_FACTOR = 10.2f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
      */
-    public static final float PREV_HORIZ_DIRECTION_CHANGE_WEIGHT = 0.75f;
+    public static final float PREV_HORIZ_DIRECTION_CHANGE_WEIGHT = 0;
 
     /**
      * This fraction of the previous value that controls vertical direction changes will be used in next step
      */
-    public static final float PREV_VERT_DIRECTION_CHANGE_WEIGHT = 0.9f;
+    public static final float PREV_VERT_DIRECTION_CHANGE_WEIGHT = 100.1f;
 
     /**
      * Maximum value by which horizontal cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 4.0f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 1;
 
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 2.0f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 100.1f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,
      */
-    public static final int CARVE_STEP_RARITY = 4;
+    public static final int CARVE_STEP_RARITY = 1;
 
     /**
      * Relative "height" if depth floor
@@ -116,7 +116,7 @@ public class TestLayerCaveGenerator implements IFlexHandlerStructureGenerator {
      * -1 results in round cave without flat floor 1 will completely fill the cave 0 will result in lower half of the
      * cave to be filled with stone
      */
-    public static final double CAVE_FLOOR_DEPTH = -0.7;
+    public static final double CAVE_FLOOR_DEPTH = -100;
 
     /**
      * Controls which blocks can be replaced by cave

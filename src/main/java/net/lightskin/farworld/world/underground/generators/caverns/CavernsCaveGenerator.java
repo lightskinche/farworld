@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.generators.cavern;
+package net.lightskin.farworld.world.underground.generators.caverns;
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
-public class CavernCaveGenerator implements IFlexHandlerStructureGenerator {
+public class CavernsCaveGenerator implements IFlexHandlerStructureGenerator {
     //=============================================
     //Possibly configurable values
     //=============================================
@@ -37,12 +37,12 @@ public class CavernCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 16 * 7 / (2 * 2 * 2);
+    public static final int CAVE_RARITY = 16 * 7;
 
     /**
      * Maximum amount of starting nodes
      */
-    public static final int MAX_INIT_NODES = 20;
+    public static final int MAX_INIT_NODES = 100;
 
     /**
      * 1 in LARGE_NODE_RARITY initial attempts will result in large node
@@ -53,17 +53,17 @@ public class CavernCaveGenerator implements IFlexHandlerStructureGenerator {
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 25;
+    public static final int LARGE_NODE_MAX_BRANCHES = 34;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual
      */
-    public static final int BIG_CAVE_RARITY = 1;
+    public static final int BIG_CAVE_RARITY = 20;
 
     /**
      * Value added to the size of the cave (radius)
      */
-    public static final double CAVE_SIZE_ADD = 5.25D;
+    public static final double CAVE_SIZE_ADD = 3.5D;
 
     /**
      * In 1 of STEEP_STEP_RARITY steps, cave will be flattened using STEEPER_FLATTEN_FACTOR instead of FLATTEN_FACTOR
@@ -78,32 +78,32 @@ public class CavernCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * If steeper cave is allowed - this value will be used instead of FLATTEN_FACTOR
      */
-    public static final float STEEPER_FLATTEN_FACTOR = 0.92f;
+    public static final float STEEPER_FLATTEN_FACTOR = 0.22f;
 
     /**
      * Each step cave direction angles will be changed by this fraction of values that specify how direction changes
      */
-    public static final float DIRECTION_CHANGE_FACTOR = 0.25f;
+    public static final float DIRECTION_CHANGE_FACTOR = 0.9f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
      */
-    public static final float PREV_HORIZ_DIRECTION_CHANGE_WEIGHT = 0.75f;
+    public static final float PREV_HORIZ_DIRECTION_CHANGE_WEIGHT = 0.9f;
 
     /**
      * This fraction of the previous value that controls vertical direction changes will be used in next step
      */
-    public static final float PREV_VERT_DIRECTION_CHANGE_WEIGHT = 0.9f;
+    public static final float PREV_VERT_DIRECTION_CHANGE_WEIGHT = 0.1f;
 
     /**
      * Maximum value by which horizontal cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0.25f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0;
 
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.125f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 2.25f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,
@@ -116,7 +116,7 @@ public class CavernCaveGenerator implements IFlexHandlerStructureGenerator {
      * -1 results in round cave without flat floor 1 will completely fill the cave 0 will result in lower half of the
      * cave to be filled with stone
      */
-    public static final double CAVE_FLOOR_DEPTH = -1;
+    public static final double CAVE_FLOOR_DEPTH = 0;
 
     /**
      * Controls which blocks can be replaced by cave

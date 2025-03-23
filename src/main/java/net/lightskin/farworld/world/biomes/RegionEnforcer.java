@@ -14,16 +14,12 @@ public class RegionEnforcer {
 			//in chunk coords
 			new OverworldRegion(0,0,1000,null),
 			new OverworldRegion(0,0,2000,FarWorldOverworldBiomes.muskagBiome),
-			new OverworldRegion(0,0,10000,null),
-			new OverworldRegion(0,0,15000,FarWorldOverworldBiomes.oceanicThresholdBiome),
-			new OverworldRegion(0,0,20000,FarWorldOverworldBiomes.oceanicAbyssBiome),
+			new OverworldRegion(0,0,10000,null)
 			};
 	public static HashMap<OverworldBiomeSpecial,TempSuperCategory> specialCategory = new HashMap<OverworldBiomeSpecial, TempSuperCategory>();
 	
 	public static void setRules() {
 		specialCategory.put(FarWorldOverworldBiomes.muskagBiome,TempSuperCategory.COLD); //change idk doing water rn
-		specialCategory.put(FarWorldOverworldBiomes.oceanicThresholdBiome, TempSuperCategory.OCEAN);
-		specialCategory.put(FarWorldOverworldBiomes.oceanicAbyssBiome, TempSuperCategory.ABYSS);
 	}
 	private static boolean getInCircle(int locx, int locz, int centerx, int centerz, int rad) {
 		if(Math.sqrt(Math.pow(locx - centerx, 2) + Math.pow(locz - centerz, 2)) <= rad)
