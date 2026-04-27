@@ -80,7 +80,7 @@ public class CommonHandler {
 			player.getHeldItemMainhand().damageItem(1, player);
 		}
 	}
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent //messy sound code but works well enough, pitch 8 default btw
 	public void ClientTick(TickEvent.ClientTickEvent event) {
 	    if (event.phase == TickEvent.Phase.START) {
@@ -93,5 +93,5 @@ public class CommonHandler {
 	    		MusicTable.last = null;
 	    	}
 	    }
-	}
+	}*/
 }

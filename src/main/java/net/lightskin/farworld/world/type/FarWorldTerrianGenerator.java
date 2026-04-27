@@ -123,7 +123,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	    private static CustomGeneratorSettings createSettings() {
 	        CustomGeneratorSettings settings = new CustomGeneratorSettings();
 	        {
-	            settings.standardOres.list.addAll(Arrays.asList(
+	            //settings.standardOres.list.addAll(Arrays.asList(
 	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.DIRT.getDefaultState())
 	                            .size(33).attempts(10).probability(1f / (256f / ICube.SIZE))
@@ -132,7 +132,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                            .block(Blocks.GRAVEL.getDefaultState())
 	                            .size(33).attempts(8).probability(1f / (256f / ICube.SIZE)).create(),*/
 
-	                    StandardOreConfig.builder()
+	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE))
 	                            .size(33).attempts(10).probability(256f / 80f / (256f / ICube.SIZE))
 	                            .maxHeight((80f - 64f) / 64f).create(),
@@ -143,7 +143,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE))
 	                            .size(33).attempts(10).probability(256f / 80f / (256f / ICube.SIZE))
-	                            .maxHeight((80f - 64f) / 64f).create()//,
+	                            .maxHeight((80f - 64f) / 64f).create()//,*/
 
 	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.COAL_ORE.getDefaultState())
@@ -180,7 +180,7 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                            .minHeight(-0.5f).maxHeight(0.25f)
 	                            .biomes(Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK, Biomes.MUTATED_MESA, Biomes.MUTATED_MESA_CLEAR_ROCK,
 	                                    Biomes.MUTATED_MESA_ROCK).create()*/
-	            ));
+	            //));
 	            for(Region[] b : RegionManager.regionMap.values()) {
 	            	for(Region r : b) {
 	            	for(Section a : r.regionalSections()) {

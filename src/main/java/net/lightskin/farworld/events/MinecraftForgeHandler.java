@@ -79,7 +79,7 @@ public class MinecraftForgeHandler {
 			}
 		}
 	} do network code for this*/
-	@SubscribeEvent
+	/*@SubscribeEvent ????? Why is this here?
 	public void LivingDie(LivingDeathEvent event) {
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			try {
@@ -91,7 +91,7 @@ public class MinecraftForgeHandler {
 			event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
 			event.setCanceled(true);
 		}
-	}
+	}*/
 	private static int ticks = 0;
 	private String last_song = "None";
 	@SideOnly(Side.CLIENT)
@@ -123,6 +123,7 @@ public class MinecraftForgeHandler {
 	  event.setResultSound(event.getSound());
 	}
 	//THEY WON'T WIN THE WAR
+	//nah they won ngl
 	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void ChunkPopulatePost(PopulateChunkEvent.Post post) {
