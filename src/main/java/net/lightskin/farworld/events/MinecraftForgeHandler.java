@@ -1,7 +1,5 @@
 package net.lightskin.farworld.events;
 
-import org.apache.logging.log4j.Level;
-
 import io.github.opencubicchunks.cubicchunks.api.world.IColumn;
 import io.github.opencubicchunks.cubicchunks.api.world.ICube;
 import net.lightskin.farworld.FarWorld;
@@ -40,6 +38,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import me.guichaguri.tickratechanger.api.TickrateAPI;
 
 public class MinecraftForgeHandler {
 	public MinecraftForgeHandler() {
@@ -58,11 +57,6 @@ public class MinecraftForgeHandler {
 		}
 	}*/
 	/*
-	public void LivingDie(LivingDeathEvent event) {
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			MusicTable.sh.stopSounds();
-		}
-	}
 	public void PlayerAttackEntity(AttackEntityEvent event) {
 		if(event.getEntityLiving() instanceof EntityMob) { //if hostile
 			if(CommonHandler.cur_biome instanceof MusicalBiomeBase) {
@@ -85,6 +79,19 @@ public class MinecraftForgeHandler {
 			}
 		}
 	} do network code for this*/
+	@SubscribeEvent
+	public void LivingDie(LivingDeathEvent event) {
+		if(event.getEntityLiving() instanceof EntityPlayer) {
+			try {
+				TickrateAPI.changeTickrate(0);
+			}
+			catch(Exception e) {
+				//FarWorld.logger.log("Failed.");
+			}
+			event.getEntityLiving().setHealth(event.getEntityLiving().getMaxHealth());
+			event.setCanceled(true);
+		}
+	}
 	private static int ticks = 0;
 	private String last_song = "None";
 	@SideOnly(Side.CLIENT)

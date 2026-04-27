@@ -31,10 +31,6 @@ public class HeatLayer extends Layer{
 	public IBlockState fillerBlock() { //like how filler blocks work in dims
 		return Blocks.STONE.getDefaultState();
 	}
-	@Override
-	public IBlockState[] disabledBlocks() { //list of default blocks (granite, coal, iron) that have to be manually overriden
-		return new IBlockState[]{Blocks.GRAVEL.getDefaultState(), Blocks.DIRT.getDefaultState(), Blocks.COBBLESTONE.getDefaultState(), Blocks.MOSSY_COBBLESTONE.getDefaultState(), Blocks.MOB_SPAWNER.getDefaultState(), Blocks.CHEST.getDefaultState()};
-	}
 	/*@Override
 	public void special(CubePrimer cube, CubePos pos) {
 		if(SimplexNoise.noise(pos.getX() * 16, pos.getZ() * 16) > -0.8f)

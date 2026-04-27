@@ -62,6 +62,8 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
     implementation(files("libs/CubicChunks-1.12.2-0.0.1208.0-SNAPSHOT-all.jar"))
     implementation(files("libs/CubicWorldGen-1.12.2-0.0.152.0-SNAPSHOT-all.jar"))
+    implementation(files("libs/SkillTree-1.2.3.0.jar"))
+    implementation(files("libs/TickrateChanger-1.0.14.jar"))
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"

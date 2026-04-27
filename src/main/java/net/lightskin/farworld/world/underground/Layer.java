@@ -41,7 +41,7 @@ public abstract class Layer {
 	}
 	
 	public IBlockState[] disabledBlocks() { //list of default blocks (granite, coal, iron) that have to be manually overriden
-		return null;
+		return new IBlockState[]{Blocks.COBBLESTONE.getDefaultState(), Blocks.MOSSY_COBBLESTONE.getDefaultState(), Blocks.MOB_SPAWNER.getDefaultState(), Blocks.CHEST.getDefaultState()};
 	}
 	
 	public IBlockState fillerBlock() { //like how filler blocks work in dims

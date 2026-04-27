@@ -124,13 +124,13 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	        CustomGeneratorSettings settings = new CustomGeneratorSettings();
 	        {
 	            settings.standardOres.list.addAll(Arrays.asList(
-	                    StandardOreConfig.builder()
+	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.DIRT.getDefaultState())
 	                            .size(33).attempts(10).probability(1f / (256f / ICube.SIZE))
 	                            .create(),
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.GRAVEL.getDefaultState())
-	                            .size(33).attempts(8).probability(1f / (256f / ICube.SIZE)).create(),
+	                            .size(33).attempts(8).probability(1f / (256f / ICube.SIZE)).create(),*/
 
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE))
@@ -143,16 +143,16 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE))
 	                            .size(33).attempts(10).probability(256f / 80f / (256f / ICube.SIZE))
-	                            .maxHeight((80f - 64f) / 64f).create(),
+	                            .maxHeight((80f - 64f) / 64f).create()//,
 
-	                    StandardOreConfig.builder()
+	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.COAL_ORE.getDefaultState())
 	                            .size(17).attempts(20).probability(256f / 128f / (256f / ICube.SIZE))
 	                            .maxHeight(1).create(),
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.IRON_ORE.getDefaultState())
 	                            .size(9).attempts(20).probability(256f / 64f / (256f / ICube.SIZE))
-	                            .maxHeight(0).create(),
+	                            .maxHeight(0).create(),*/
 	                            /*
 	                    StandardOreConfig.builder()
 	                            .block(Blocks.GOLD_ORE.getDefaultState())
@@ -168,19 +168,13 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 	                            .maxHeight(-0.75f)
 	                            .create(),*/
 	                            
-	                    StandardOreConfig.builder()
+	                    /*StandardOreConfig.builder()
 	                            .block(Blocks.EMERALD_ORE.getDefaultState())
 	                            .size(1).attempts(11).probability(0.5f * 256f / 28f / (256f / ICube.SIZE))
 	                            .maxHeight(0)
 	                            .biomes(Biomes.EXTREME_HILLS, Biomes.EXTREME_HILLS_EDGE, Biomes.EXTREME_HILLS_WITH_TREES, Biomes.MUTATED_EXTREME_HILLS,
-	                                    Biomes.MUTATED_EXTREME_HILLS_WITH_TREES).create(),
-	                    StandardOreConfig.builder()
-	                            .block(Blocks.MONSTER_EGG.getDefaultState().withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.STONE))
-	                            .size(7).attempts(7).probability(256f / 64f / (256f / ICube.SIZE))
-	                            .maxHeight(-0.5f)
-	                            .biomes(Biomes.EXTREME_HILLS, Biomes.EXTREME_HILLS_EDGE, Biomes.EXTREME_HILLS_WITH_TREES, Biomes.MUTATED_EXTREME_HILLS,
-	                                    Biomes.MUTATED_EXTREME_HILLS_WITH_TREES).create()/*,
-	                    StandardOreConfig.builder()
+	                                    Biomes.MUTATED_EXTREME_HILLS_WITH_TREES).create(),*/
+/*                               StandardOreConfig.builder()
 	                            .block(Blocks.GOLD_ORE.getDefaultState())
 	                            .size(20).attempts(2).probability(256f / 32f / (256f / ICube.SIZE))
 	                            .minHeight(-0.5f).maxHeight(0.25f)

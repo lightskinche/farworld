@@ -10,7 +10,7 @@ public class LayerManager {
 	public static Layer[] layerList = {
 			new HardwareLayer(2,2),
 			new FallsLayer(0,12),
-			new HeatLayer(12,6)
+			new HeatLayer(-12,6)
 			};
 	
 	public static Layer getLayer(int y) {
