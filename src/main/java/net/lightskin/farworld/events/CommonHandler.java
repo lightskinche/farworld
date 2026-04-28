@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityZombie;
@@ -30,6 +31,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -80,6 +82,57 @@ public class CommonHandler {
 			player.getHeldItemMainhand().damageItem(1, player);
 		}
 	}
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onFogDensity(EntityViewRenderEvent.FogDensity event) {
+	    if (event.getEntity().posY < 0) {
+	        // We set a high density, but we need to control WHERE it starts.
+	        // Because 1.12.2 fixed-function pipeline fog is radial, 
+	        // to get 'vertical' fog, you actually need a custom shader or 
+	        // to manipulate the Fog Start/End based on the camera angle.
+	        
+	        event.setDensity(0.5F); 
+	        event.setCanceled(true);
+	    }
+	}
+
+	/*@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+	    if (event.getEntity().posY < 0) {
+	        float limit = 48.0F; // 3 chunks
+	        
+	        // This is the trick: 
+	        // We set the fog to be linear and end at our vertical limit.
+	        GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
+	        
+	        // To make it feel "Vertical", we must ensure horizontal distance 
+	        // is ignored. In standard GL, this is impossible without a shader.
+	        // HOWEVER, you can approximate it by adjusting the FogEnd based on Pitch:
+	        
+	        double pitch = Math.toRadians(Math.abs(event.getEntity().rotationPitch));
+	        float verticalFactor = (float) Math.sin(pitch);
+	        
+	        // When looking straight up/down, fog ends at 48.
+	        // When looking at the horizon, fog ends at infinity (disappears).
+	        float dynamicEnd = limit / (verticalFactor + 0.001F);
+	        
+	        GlStateManager.setFogStart(dynamicEnd * 0.5F);
+	        GlStateManager.setFogEnd(dynamicEnd);
+	    }
+	}*/
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onFogColor(EntityViewRenderEvent.FogColors event) {
+	    double playerY = event.getEntity().posY;
+	    if (playerY <= 0) {
+	        //player is in the first (real) layer, so let's make the fog completely black
+	        event.setRed(0.0F);
+	        event.setGreen(0.0F);
+	        event.setBlue(0.0F);
+	    }
+	}
 	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent //messy sound code but works well enough, pitch 8 default btw
 	public void ClientTick(TickEvent.ClientTickEvent event) {
@@ -94,4 +147,15 @@ public class CommonHandler {
 	    	}
 	    }
 	}*/
+	
+	@SubscribeEvent //slarb
+	@SideOnly(Side.CLIENT)
+	public void ClientTick(TickEvent.ClientTickEvent event) {
+		Minecraft mc = Minecraft.getMinecraft();
+	    if (event.phase == TickEvent.Phase.START && mc.world != null && mc.player != null) {
+	        if (mc.player.posY < 0) {
+	            mc.world.setWorldTime(19000L);
+	        }
+	    }
+	}
 }
