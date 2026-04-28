@@ -126,7 +126,7 @@ public class MinecraftForgeHandler {
 	  event.setResultSound(event.getSound());
 	}
 	//THEY WON'T WIN THE WAR
-	//nah they won ngl
+	//...and they DIDNT HAHAHA
 	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void ChunkPopulatePost(PopulateChunkEvent.Post post) {
