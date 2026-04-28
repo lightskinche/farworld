@@ -8,6 +8,7 @@ import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.IFle
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.world.WorldRegister;
 import net.lightskin.farworld.world.underground.Layer;
+import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.generators.heat.HeatCaveGenerator;
 import net.lightskin.farworld.world.underground.generators.heat.HeatRavineGenerator;
 import net.minecraft.block.BlockStone;
@@ -30,6 +31,10 @@ public class HeatLayer extends Layer{
 	@Override
 	public IBlockState fillerBlock() { //like how filler blocks work in dims
 		return Blocks.STONE.getDefaultState();
+	}
+	@Override
+	public OreEntry[] layerOres() {
+		return new OreEntry[] {new OreEntry(Blocks.LAVA.getDefaultState(), 4, 4, 10)};
 	}
 	/*@Override
 	public void special(CubePrimer cube, CubePos pos) {

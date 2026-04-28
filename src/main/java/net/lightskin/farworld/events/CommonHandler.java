@@ -82,7 +82,7 @@ public class CommonHandler {
 			player.getHeldItemMainhand().damageItem(1, player);
 		}
 	}
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onFogDensity(EntityViewRenderEvent.FogDensity event) {
 	    if (event.getEntity().posY < 0) {
@@ -94,7 +94,7 @@ public class CommonHandler {
 	        event.setDensity(0.5F); 
 	        event.setCanceled(true);
 	    }
-	}
+	}*/
 
 	/*@SideOnly(Side.CLIENT)
 	@SubscribeEvent

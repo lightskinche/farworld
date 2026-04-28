@@ -49,11 +49,14 @@ import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.Cubi
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.feature.CubicStrongholdGenerator;
 import io.github.opencubicchunks.cubicchunks.cubicgen.preset.wrapper.BiomeDesc;
 import net.lightskin.farworld.FarWorld;
+import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.world.FarWorldBiomeProvider;
 import net.lightskin.farworld.world.WorldRegister;
 import net.lightskin.farworld.world.biomes.FarWorldOverworldBiomes;
 import net.lightskin.farworld.world.biomes.OverworldBiomeSpecial;
 import net.lightskin.farworld.world.biomes.RegionEnforcer;
+import net.lightskin.farworld.world.underground.CaveBiome;
+import net.lightskin.farworld.world.underground.CaveBiomeDecorator;
 import net.lightskin.farworld.world.underground.Layer;
 import net.lightskin.farworld.world.underground.OreEntry;
 import net.lightskin.farworld.world.underground.Region;
@@ -285,7 +288,10 @@ public class FarWorldTerrianGenerator extends BasicCubeGenerator{
 
 	        for (Biome biome : ForgeRegistries.BIOMES) {
 	            CubicBiome cubicBiome = CubicBiome.getCubic(biome);
-	            populators.put(biome, cubicBiome.getDecorator(conf));
+	            if (cubicBiome.getBiome().fillerBlock == Blocks.OBSIDIAN.getDefaultState() || biome.fillerBlock == FarWorldBlocks.hardStone.getDefaultState()) //is cave biome
+	            	populators.put(biome, new CaveBiomeDecorator());
+	            else
+	            	populators.put(biome, cubicBiome.getDecorator(conf));
 	        }
 
 	        InitCubicStructureGeneratorEvent caveEvent = new InitCubicStructureGeneratorEvent(EventType.CAVE, new CubicCaveGenerator());

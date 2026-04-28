@@ -3,6 +3,7 @@ package net.lightskin.farworld;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.effects.FarWorldPotions;
 import net.lightskin.farworld.events.MinecraftForgeHandler;
+import net.lightskin.farworld.events.TerrianHandler;
 import net.lightskin.farworld.sound.MusicTable;
 import net.lightskin.farworld.events.CommonHandler;
 import net.lightskin.farworld.te.FarWorldTileEntities;
@@ -42,6 +43,7 @@ public class FarWorld
     //event handlers
     static public CommonHandler tickHandler;
     static public MinecraftForgeHandler chunkHandler;
+    static public TerrianHandler terrianHandler;
     //depths of the fallen
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -62,6 +64,7 @@ public class FarWorld
     {
     	tickHandler = new CommonHandler();
     	chunkHandler = new MinecraftForgeHandler();
+    	terrianHandler = new TerrianHandler();
         // some example code
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
         
