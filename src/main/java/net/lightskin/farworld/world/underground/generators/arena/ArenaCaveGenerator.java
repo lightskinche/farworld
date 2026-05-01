@@ -37,17 +37,17 @@ public class ArenaCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 14;
+    public static final int CAVE_RARITY = 10;
 
     /**
      * Maximum amount of starting nodes
      */
-    public static final int MAX_INIT_NODES = 50;
+    public static final int MAX_INIT_NODES = 15;
 
     /**
      * 1 in LARGE_NODE_RARITY initial attempts will result in large node
      */
-    public static final int LARGE_NODE_RARITY = 1;
+    public static final int LARGE_NODE_RARITY = 5;
 
     /**
      * The maximum amount of additional branches after generating large node. Random value between 0 and
@@ -63,7 +63,7 @@ public class ArenaCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Value added to the size of the cave (radius)
      */
-    public static final double CAVE_SIZE_ADD = 6.25D;
+    public static final double CAVE_SIZE_ADD = 14.25D;
 
     /**
      * In 1 of STEEP_STEP_RARITY steps, cave will be flattened using STEEPER_FLATTEN_FACTOR instead of FLATTEN_FACTOR
@@ -83,7 +83,7 @@ public class ArenaCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Each step cave direction angles will be changed by this fraction of values that specify how direction changes
      */
-    public static final float DIRECTION_CHANGE_FACTOR = 0.65f;
+    public static final float DIRECTION_CHANGE_FACTOR = 0.15f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
@@ -98,12 +98,12 @@ public class ArenaCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Maximum value by which horizontal cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0.50f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0.60f;
 
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.50f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.10f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,
