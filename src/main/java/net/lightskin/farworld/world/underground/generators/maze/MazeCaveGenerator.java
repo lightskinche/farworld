@@ -42,7 +42,7 @@ public class MazeCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Maximum amount of starting nodes
      */
-    public static final int MAX_INIT_NODES = 50;
+    public static final int MAX_INIT_NODES = 30;
 
     /**
      * 1 in LARGE_NODE_RARITY initial attempts will result in large node
@@ -53,7 +53,7 @@ public class MazeCaveGenerator implements IFlexHandlerStructureGenerator {
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 20;
+    public static final int LARGE_NODE_MAX_BRANCHES = 5;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual
@@ -83,7 +83,7 @@ public class MazeCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Each step cave direction angles will be changed by this fraction of values that specify how direction changes
      */
-    public static final float DIRECTION_CHANGE_FACTOR = 0.1f;
+    public static final float DIRECTION_CHANGE_FACTOR = 0.31f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
@@ -103,7 +103,7 @@ public class MazeCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.50f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.75f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,

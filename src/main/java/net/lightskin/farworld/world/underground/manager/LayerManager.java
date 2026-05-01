@@ -26,8 +26,8 @@ public class LayerManager {
 			new HardwareLayer(2,2),
 			new MazeLayer(0,32),
 			new FallsLayer(-32,63), //aka Substratum
-			new ArenaLayer(-95,16),
-			new PlainsLayer(-111,8)//,
+			new ArenaLayer(-95,20),
+			new PlainsLayer(-115,8)//,
 			//new HeatLayer(-111,6)
 			};
 	
