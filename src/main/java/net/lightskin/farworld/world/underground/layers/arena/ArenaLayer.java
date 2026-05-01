@@ -1,27 +1,24 @@
-package net.lightskin.farworld.world.underground.layers.falls;
+package net.lightskin.farworld.world.underground.layers.arena;
 
 import java.util.Random;
-
 import io.github.opencubicchunks.cubicchunks.api.util.CubePos;
 import io.github.opencubicchunks.cubicchunks.api.worldgen.CubePrimer;
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.CustomGeneratorSettings;
 import io.github.opencubicchunks.cubicchunks.cubicgen.customcubic.structure.IFlexHandlerStructureGenerator;
 import net.lightskin.farworld.blocks.FarWorldBlocks;
 import net.lightskin.farworld.world.WorldRegister;
-import net.lightskin.farworld.world.underground.FarWorldRavineGenerator;
 import net.lightskin.farworld.world.underground.Layer;
-import net.lightskin.farworld.world.underground.SimplexNoise;
-import net.lightskin.farworld.world.underground.generators.caverns.CavernsCaveGenerator;
-import net.lightskin.farworld.world.underground.generators.falls.FallsCaveGenerator;
-import net.lightskin.farworld.world.underground.generators.falls.FallsRavineGenerator;
+import net.lightskin.farworld.world.underground.OreEntry;
+import net.lightskin.farworld.world.underground.generators.arena.ArenaCaveGenerator;
+import net.lightskin.farworld.world.underground.generators.arena.ArenaRavineGenerator;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.Biome;
 
-public class FallsLayer extends Layer{
+public class ArenaLayer extends Layer{
 
-	public FallsLayer(int begin_in, int length_in) {
+	public ArenaLayer(int begin_in, int length_in) {
 		super(begin_in, length_in);
 		// TODO Auto-generated constructor stub
 	}
@@ -29,15 +26,11 @@ public class FallsLayer extends Layer{
 	@Override
 	public Biome refrenceBiome() {
 		// TODO Auto-generated method stub
-		return WorldRegister.fallsReferenceBiome;
+		return WorldRegister.arenaReferenceBiome;
 	}
 	@Override
 	public IBlockState fillerBlock() { //like how filler blocks work in dims
 		return Blocks.STONE.getDefaultState();
-	}
-	@Override
-	public IBlockState[] disabledBlocks() { //list of default blocks (granite, coal, iron) that have to be manually overriden
-		return new IBlockState[]{Blocks.COBBLESTONE.getDefaultState(), Blocks.MOSSY_COBBLESTONE.getDefaultState(), Blocks.MOB_SPAWNER.getDefaultState(), Blocks.CHEST.getDefaultState(), Blocks.LAVA.getDefaultState(), Blocks.FLOWING_LAVA.getDefaultState()};
 	}
 	/*@Override
 	public void special(CubePrimer cube, CubePos pos) {
@@ -58,10 +51,10 @@ public class FallsLayer extends Layer{
 	}*/
 	@Override
 	public IFlexHandlerStructureGenerator refrenceCaves() {
-		return new FallsCaveGenerator();
+		return new ArenaCaveGenerator();
 	}
 	@Override
 	public IFlexHandlerStructureGenerator refrenceRavines(CustomGeneratorSettings conf) {
-		return new FallsRavineGenerator(conf);
+		return new ArenaRavineGenerator(conf);
 	}
 }

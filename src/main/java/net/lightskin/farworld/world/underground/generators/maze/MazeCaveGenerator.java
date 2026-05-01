@@ -1,4 +1,4 @@
-package net.lightskin.farworld.world.underground.generators.heat;
+package net.lightskin.farworld.world.underground.generators.maze;
 
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.cubeToMinBlock;
 import static io.github.opencubicchunks.cubicchunks.api.util.Coords.localToBlock;
@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
-public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
+public class MazeCaveGenerator implements IFlexHandlerStructureGenerator {
     //=============================================
     //Possibly configurable values
     //=============================================
@@ -37,7 +37,7 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
      * Vanilla value: 7 Multiply by 16 and divide by 8: there are 16 cubes in a vanilla chunk, but only one cube per 8
      * has caves generated
      */
-    public static final int CAVE_RARITY = 140;
+    public static final int CAVE_RARITY = 14;
 
     /**
      * Maximum amount of starting nodes
@@ -53,7 +53,7 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
      * The maximum amount of additional branches after generating large node. Random value between 0 and
      * LARGE_NODE_MAX_BRANCHES is chosen.
      */
-    public static final int LARGE_NODE_MAX_BRANCHES = 250;
+    public static final int LARGE_NODE_MAX_BRANCHES = 20;
 
     /**
      * 1 in BIG_CAVE_RARITY branches will start bigger than usual
@@ -63,12 +63,12 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Value added to the size of the cave (radius)
      */
-    public static final double CAVE_SIZE_ADD = 10.25D;
+    public static final double CAVE_SIZE_ADD = 2.25D;
 
     /**
      * In 1 of STEEP_STEP_RARITY steps, cave will be flattened using STEEPER_FLATTEN_FACTOR instead of FLATTEN_FACTOR
      */
-    public static final int STEEP_STEP_RARITY = 5;
+    public static final int STEEP_STEP_RARITY = 1;
 
     /**
      * After each step the Y direction component will be multiplied by this value, unless steeper cave is allowed
@@ -83,7 +83,7 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Each step cave direction angles will be changed by this fraction of values that specify how direction changes
      */
-    public static final float DIRECTION_CHANGE_FACTOR = 0.25f;
+    public static final float DIRECTION_CHANGE_FACTOR = 0.1f;
 
     /**
      * This fraction of the previous value that controls horizontal direction changes will be used in next step
@@ -98,12 +98,12 @@ public class HeatCaveGenerator implements IFlexHandlerStructureGenerator {
     /**
      * Maximum value by which horizontal cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0.25f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_HORIZ = 0.50f;
 
     /**
      * Maximum value by which vertical cave direction randomly changes each step, lower values are much more likely.
      */
-    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.25f;
+    public static final float MAX_ADD_DIRECTION_CHANGE_VERT = 0.50f;
 
     /**
      * 1 in this amount of steps will actually carve any blocks,
